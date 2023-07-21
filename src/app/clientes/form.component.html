@@ -1,0 +1,106 @@
+ <!--[routerLink]="['clientes/form']"-->
+<!--<div  class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed inset-0 z-10 overflow-y-auto">
+      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+        <div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+    <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+    <div class="mx-auto max-w-3xl">
+        <div class="text-sm text-red-900" *ngIf="errors.length > 0">
+            <div *ngFor="let err of errors">
+                <p>{{ err }}</p>
+            </div>
+        </div>
+        <div *ngIf="msg != ''" class="rounded-md bg-green-50 p-4">
+            <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-green-800">Successful</h3>
+                <div class="mt-2 text-sm text-green-700">
+                <p>{{msg}}</p>
+                </div>
+            </div>
+            </div>
+        </div>      
+        <form #clienteForm="ngForm" class="py-4">
+            <div class="space-y-12">
+            <div class="border-b border-gray-900/10 pb-12">
+                <h2 class="text-base font-semibold leading-7 text-gray-900">{{ title }}</h2>
+                <p class="mt-1 text-sm leading-6 text-gray-600">{{ description }}</p>
+        
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First name</label>
+                    <div class="mt-2">
+                    <input type="text" name="first-name" id="first-name" 
+                    [(ngModel)]="cliente.name" required maxlength="50" minlength="3" #name="ngModel" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <div class="text-xs text-red-900 py-1" *ngIf="name.invalid && (name.dirty || name.touched)">
+                        <div *ngIf="name.hasError('required')">
+                            El nombre es requerido
+                        </div>
+                        <div *ngIf="name.hasError('minlength')">
+                            El minimo de caracteres es 3
+                        </div>
+                    </div>
+                    </div> 
+                </div>
+        
+                <div class="sm:col-span-3">
+                    <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
+                    <div class="mt-2">
+                    <input type="text" name="last-name" id="last-name" 
+                    [(ngModel)]="cliente.lastname"  autocomplete="family-name" minlength="3" maxlength="50" #lastname="ngModel" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <div class="text-xs text-red-900 py-1" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                        <div *ngIf="lastname.hasError('required')">
+                            El apellido es requerido
+                        </div>
+                        <div *ngIf="lastname.hasError('minlength')">
+                            El minimo de caracteres es 3
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        
+                <div class="sm:col-span-4">
+                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                    <div class="mt-2">
+                    <input id="email" name="email" type="email" 
+                    [(ngModel)]="cliente.email" autocomplete="email"  maxlength="50" #email="ngModel" required class="block w-full rounded-md border-0 py-1.5 text--900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <div class="text-xs text-red-900 py-1" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.hasError('required')">
+                            El email es requerido
+                        </div>
+                        <div *ngIf="email.hasError('minlength')">
+                            El minimo de caracteres es 3
+                        </div>
+                        <div *ngIf="email.hasError('email')">
+                            Debe de tener un formato valido
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+            <button [disabled]="!clienteForm.form.valid" (click)="create()" type="submit" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold
+            text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 
+            focus-visible:outline-offset-2 focus-visible:outline-grayßß-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
